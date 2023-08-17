@@ -1,0 +1,84 @@
+#importing all the essential libraries for our project
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+import pandas as pd
+%matplotlib inline
+
+#loading the dataset
+[100]colomns = ['Sepal length', 'Sepal width', 'Petal length', 'petal width', 'Class_labels']
+#load the data
+df = pd.read_csv('iris.data', names=columns)
+df.head()
+
+#visualization of our dataset
+df.describe()
+#visualize the whole dataset
+sns.pairplot(df, hue='Class_labels')
+
+#Seperating input columns and the output column
+#Seperate features and target
+data = df.values
+X = data[:,0:4]
+Y =  data[:,4]
+print(df)
+print(data)
+
+
+#Splitting the data into training and testing
+#split the data to train and test dataset.
+from sklearn.model_selection import train_test_split
+X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.2)
+print(Y_test)
+
+MODEL-1: support vector machine algorithm
+#support vector machine algorithm
+from sklearn.svm import SVC
+
+moel_svc = SVC()
+model_svc.fit(X_train, Y_train)
+
+SVC()
+ prediction1 = moel_svc.predict(X_test)
+#calculate the accuracy
+from sklearn.metrics import accuracy_score
+print(accuracy_score(Y_test, prediction1))
+
+MODEL-2: Logistic Regression
+#logistic regression
+from sklearn.linear_model import LogisticRegression
+model_LR=logisticRegression()
+model_LR.fit(X_train, Y_train)
+
+LogisticRegression()
+prediction2 = model_LR.predict(X_test)
+#calculate the accuracy
+from sklearn.metrics import accuracy_score
+print(accuracy_score(Y_test, prediction2)*100)
+for i in range(len(prediction1)):
+  print(Y_test[i],prediction1[i])
+
+MODEL-3:Decision tree classifier
+#DecisionTreeClassifier
+from sklearn.tree import DecisionTreeClassifier
+model_DTC=DecisionTreeClassifier()
+model_DTC.fit(X_train, Y_train)
+
+DecisionTreeeClassifier()
+prediction3 = model_svc.predict(X_test)
+#calculate the accuracy
+from sklearn.metrics import accuracy_score
+print(accuracy_score(Y_test, prediction3))
+
+#A detailed classification report
+from sklearn.metrics import classification_report
+print(classification_report(Y_test, prediction2))
+
+X_new = np.array([[3, 2, 1, 0.2], [ 4.9, 2.2, 3.8, 1.1 ], [ 5.3, 2.5, 4.6, 1.9]])
+#prediction of the species from the input vector
+prediction =  model_svc.predict(X_new)
+print("Prediction of species: {}".format(prediction))
+
+prediction of species: ['Iris-setosa', 'Iris-versicolor', 'Iris-virginica']
+
+
